@@ -1,0 +1,38 @@
+---
+
+- name: Ensure Jenkins user added
+  user: name={{ username }} group={{ usergroup }} shell=/bin/bash
+  sudo: yes
+
+- name: Ensure Apache installed
+  yum: name=httpd state=latest
+  sudo: yes
+  notify: 
+    - start apache
+
+- name: configure apache
+  copy: src=jenkins.conf dest=/etc/httpd/conf.d/jenkins.conf
+  sudo: yes
+  notify:
+    - restart apache
+
+- name: Ensure git installed 
+  yum: name=git state=latest
+  sudo: yes
+
+- name: Ensure gcc installed 
+  yum: name=gcc state=latest
+  sudo: yes
+
+- name: Ensure rubygem20-io-console installed 
+  yum: name=rubygem20-io-console state=latest
+  sudo: yes
+
+- name: Ensure openssl-devel installed 
+  yum: name=openssl-devel state=latest
+  sudo: yes
+
+- name: Ensure Bundler installed
+  shell: gem install bundler
+  sudo: yes
+

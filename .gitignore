@@ -1,0 +1,12 @@
+# Created by https://www.gitignore.io
+
+### Vagrant ###
+.vagrant/
+.env
+*.bak
+
+### Ruby ###
+
+/*/vender/bundle
+/*/.bundle
+

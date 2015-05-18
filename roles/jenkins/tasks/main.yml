@@ -1,0 +1,26 @@
+---
+- name: Ensure Jenkins Yum repo present
+  get_url: url=http://pkg.jenkins-ci.org/redhat/jenkins.repo
+           dest=/etc/yum.repos.d/jenkins.repo mode=0644
+  sudo: yes
+
+- name: Ensure Jenkins GPG key installed
+  command: rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
+  sudo: yes
+
+- name: Ensure Jenkins installed
+  yum: name=jenkins state=present
+  sudo: yes
+
+- name: Ensure Jenkins prefix added
+  lineinfile: 
+    dest=/etc/sysconfig/jenkins
+    regexp=^JENKINS_ARGS=
+    line='JENKINS_ARGS="--prefix=/jenkins"'
+  sudo: yes
+
+- name: Ensure Jenkins is running
+  service: name=jenkins state=running enabled=true
+  sudo: yes
+  notify:
+    - restart apache
