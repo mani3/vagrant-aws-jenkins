@@ -24,6 +24,10 @@
   yum: name=gcc state=latest
   sudo: yes
 
+- name: Ensure gcc-c++ installed 
+  yum: name=gcc-c++ state=latest
+  sudo: yes
+
 - name: Ensure rubygem20-io-console installed 
   yum: name=rubygem20-io-console state=latest
   sudo: yes
@@ -36,3 +40,34 @@
   shell: gem install bundler
   sudo: yes
 
+- name: Ensure ruby-devel installed
+  yum: name=ruby-devel state=latest
+  sudo: yes
+
+- name: Ensure libxml2 installed
+  yum: name={{ item.name }} state=latest
+  with_items:
+    - name: libxml2
+    - name: libxml2-devel
+  sudo: yes
+
+- name: Ensure libxslt installed
+  yum: name={{ item.name }} state=latest
+  with_items:
+    - name: libxslt
+    - name: libxslt-devel
+  sudo: yes
+
+- name: Ensure mysql installed
+  yum: name={{ item.name }} state=latest
+  with_items:
+    - name: mysql
+    - name: mysql-devel
+    - name: mysql-common
+    - name: mysql-libs
+    - name: mysql-server
+  sudo: yes
+
+- name: Ensure postgresql-devel installed
+  yum: name=postgresql-devel state=latest
+  sudo: yes
