@@ -4,6 +4,13 @@
 VAGRANTFILE_API_VERSION = "2"
 Dotenv.load
 
+USER_DATA = <<"EOS"
+#cloud-config
+timezone: "Asia/Tokyo"
+runcmd:
+ - [ sh, -c, "sed -i 's/^.*requiretty/#Defaults requiretty/' /etc/sudoers" ]
+EOS
+
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
@@ -47,7 +54,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     aws.tags = {'Name' => 'vagrant-test'}
 
     # Amazon Linuxの場合は最初からsudoできないので指定しておく
-    aws.user_data = "#!/bin/sh\nsed -i 's/^.*requiretty/#Defaults requiretty/' /etc/sudoers\n"
+    aws.user_data = USER_DATA
 
     # SSH
     override.ssh.username = 'ec2-user'
