@@ -15,13 +15,19 @@ require 'pp'
 
 Dotenv.load
 
+# インスタンス起動時に実行される
+USER_DATA = <<"EOS"
+#cloud-config
+timezone: "Asia/Tokyo"
+runcmd:
+ - [ sh, -c, "sed -i 's/^.*requiretty/#Defaults requiretty/' /etc/sudoers" ]
+EOS
+
 class JenkinsEC2
   AMI = 'ami-cbf90ecb' # Amazon Linux AMI 2015.03
   SUBNET = ENV['SUBNET']
   KEY_NAME = ENV['KEY_NAME']
   SECURITY_GROUP_IDS = [ENV['SECURITY_GROUP']]
-  # sudo を使えるようにします
-  USER_DATA = "#!/bin/sh\nsed -i 's/^.*requiretty/#Defaults requiretty/' /etc/sudoers\n"  
 
   def initialize()
     @ec2 = Aws::EC2::Client.new(
