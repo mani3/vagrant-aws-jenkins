@@ -1,0 +1,5 @@
+---
+- name: Ensure gnuplot installed
+  yum: name=gnuplot state=latest
+  sudo: yes
+
