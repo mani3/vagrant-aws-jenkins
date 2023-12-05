@@ -11,9 +11,8 @@ GEM
       aws-sdk-core (= 2.0.42)
     builder (3.2.2)
     dotenv (2.0.1)
-    jmespath (1.0.2)
-      multi_json (~> 1.0)
-    multi_json (1.11.0)
+    jmespath (1.6.2)
+    multi_json (1.15.0)
 
 PLATFORMS
   ruby
